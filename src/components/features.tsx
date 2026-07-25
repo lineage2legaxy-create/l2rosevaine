@@ -1,91 +1,39 @@
-import { GiBroadsword, GiCastle, GiTrophyCup, GiCoins } from "react-icons/gi";
+const atlasCell = (column: number, row: number) => ({
+  backgroundImage: "url('/media/rose-vaine-icon-atlas.png')",
+  backgroundSize: "300% 200%",
+  backgroundPosition: `${column * 50}% ${row * 100}%`,
+});
 
-const SECONDARY_FEATURES = [
-  {
-    icon: GiTrophyCup,
-    title: "Rankings en tiempo real",
-    body: "Seguí tu progreso frente al resto del servidor: nivel, PvP, PK y clanes.",
-  },
-  {
-    icon: GiCoins,
-    title: "Economia viva",
-    body: "Comercia, fabrica y progresa dentro de rates pensados para recompensar la constancia.",
-  },
-] as const;
-
-export const Features = () => {
-  return (
-    <section id="features" className="relative w-full bg-obsidian py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-6 sm:px-12">
-        <h2 className="brand-heading mb-16 max-w-2xl text-4xl text-ivory sm:text-5xl">
-          Un mundo. Sin limites.
-          <br />
-          Tu historia.
+export const Features = () => (
+  <section id="features" className="bg-obsidian py-24 sm:py-32">
+    <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-10">
+      <div className="grid gap-12 lg:grid-cols-[1.35fr_0.65fr] lg:items-end">
+        <h2 className="max-w-4xl font-display text-4xl leading-[1.03] font-bold tracking-[-0.035em] text-ivory sm:text-6xl">
+          El castillo no es un decorado. Es la frontera entre tu clan y la historia.
         </h2>
-
-        {/* Split 1: PvP */}
-        <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-14">
-          <div className="order-2 md:order-1">
-            <span className="mb-3 inline-flex items-center gap-2 text-amethyst">
-              <GiBroadsword className="size-5" />
-            </span>
-            <h3 className="brand-heading mb-4 text-2xl text-ivory sm:text-3xl">
-              Guerra sin limites
-            </h3>
-            <p className="font-sans max-w-md text-ivory-muted">
-              Competi en PvP, domina la Olympiad y defende el honor de tu clan
-              en batallas que definiran el futuro del mundo.
-            </p>
-          </div>
-
-          <div className="order-1 overflow-hidden rounded-card border border-amethyst/10 md:order-2">
-            <img
-              src="/img/feature-pvp.webp"
-              alt="Armas y armaduras medievales"
-              loading="lazy"
-              className="h-64 w-full object-cover sm:h-80"
-            />
-          </div>
+        <p className="border-l border-[#d7c58f]/35 pl-6 font-sans leading-relaxed text-ivory/70">
+          Asedios de 120 minutos, desde nivel de clan 4 y hasta 10 clanes por bando, según la configuración actual.
+        </p>
+      </div>
+      <figure className="relative mt-12 min-h-[28rem] overflow-hidden border border-white/10 lg:min-h-[42rem]">
+        <img src="/img/feature-siege.webp" alt="Fortaleza medieval preparada para un asedio" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent" />
+        <figcaption className="absolute right-5 bottom-5 max-w-sm border-r border-[#d7c58f] pr-4 text-right font-sans text-sm text-ivory/80">
+          120 min · clan nivel 4 · 10 atacantes / 10 defensores
+        </figcaption>
+      </figure>
+      <div className="mt-16 grid gap-10 border-t border-white/10 pt-10 md:grid-cols-[0.7fr_1.3fr] md:items-center">
+        <div className="grid grid-cols-2 gap-px bg-white/10">
+          <span className="aspect-square bg-obsidian" style={atlasCell(0, 0)} aria-hidden="true" />
+          <span className="aspect-square bg-obsidian" style={atlasCell(1, 0)} aria-hidden="true" />
         </div>
-
-        {/* Split 2: Sieges (reversed) */}
-        <div className="mt-20 grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-14">
-          <div className="overflow-hidden rounded-card border border-amethyst/10">
-            <img
-              src="/img/feature-siege.webp"
-              alt="Castillo medieval de noche"
-              loading="lazy"
-              className="h-64 w-full object-cover sm:h-96"
-            />
-          </div>
-
-          <div>
-            <span className="mb-3 inline-flex items-center gap-2 text-amethyst">
-              <GiCastle className="size-5" />
-            </span>
-            <h3 className="brand-heading mb-4 text-2xl text-ivory sm:text-3xl">
-              Conquista el reino
-            </h3>
-            <p className="font-sans max-w-md text-ivory-muted">
-              Participa en asedios, ocupa castillos y converti a tu alianza en
-              la fuerza dominante del servidor.
-            </p>
-          </div>
-        </div>
-
-        {/* Secondary features: two, not three-equal-cards */}
-        <div className="mt-20 grid grid-cols-1 gap-px overflow-hidden rounded-card border border-amethyst/10 bg-amethyst/10 sm:grid-cols-2">
-          {SECONDARY_FEATURES.map(({ icon: Icon, title, body }) => (
-            <div key={title} className="bg-obsidian-soft p-8 sm:p-10">
-              <Icon className="mb-4 size-6 text-amethyst" />
-              <h4 className="brand-heading mb-2 text-xl text-ivory">
-                {title}
-              </h4>
-              <p className="font-sans text-sm text-ivory-muted">{body}</p>
-            </div>
-          ))}
+        <div className="md:pl-10">
+          <h3 className="font-display text-3xl font-bold text-ivory sm:text-5xl">PvP con consecuencias</h3>
+          <p className="mt-5 max-w-2xl font-sans text-lg leading-relaxed text-ivory/72">
+            El estado PvP permanece 40 segundos frente a un inocente y 20 segundos frente a otro jugador marcado. La Olympiad activa completa el pulso competitivo.
+          </p>
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);

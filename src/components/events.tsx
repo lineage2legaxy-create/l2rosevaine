@@ -1,49 +1,34 @@
-import { SERVER_EVENTS } from "@/constants";
+import { SERVER_EVENTS, type EventStatus } from "@/constants";
 
-const STATUS_LABEL: Record<string, string> = {
-  activo: "Activo",
-  en_revision: "En revision",
-  proximamente: "Proximamente",
+const STATUS_LABEL: Record<EventStatus, string> = { activo: "Activo", en_revision: "En revisión", proximamente: "Próximamente" };
+const STATUS_TONE: Record<EventStatus, string> = {
+  activo: "border-online-green text-online-green",
+  en_revision: "border-amethyst-soft text-amethyst-soft",
+  proximamente: "border-ivory-muted/50 text-ivory-muted",
 };
 
-const STATUS_DOT: Record<string, string> = {
-  activo: "bg-online-green",
-  en_revision: "bg-amethyst-soft",
-  proximamente: "bg-ivory-muted",
-};
-
-export const Events = () => {
-  return (
-    <section
-      id="events"
-      className="relative w-full bg-obsidian-soft py-24 sm:py-32"
-    >
-      <div className="mx-auto max-w-6xl px-6 sm:px-12">
-        <h2 className="brand-heading mb-3 text-4xl text-ivory sm:text-5xl">
-          Eventos
-        </h2>
-        <p className="font-sans mb-12 max-w-xl text-ivory-muted">
-          Estado real segun la configuracion actual del servidor.
+export const Events = () => (
+  <section id="events" className="bg-obsidian-soft py-24 sm:py-32">
+    <div className="mx-auto grid max-w-[1400px] gap-14 px-5 sm:px-8 lg:grid-cols-[0.55fr_1fr] lg:px-10">
+      <div>
+        <h2 className="font-display text-4xl font-bold text-ivory sm:text-6xl">El pulso del mundo</h2>
+        <p className="mt-5 max-w-md font-sans leading-relaxed text-ivory/70">
+          Estado tomado de la configuración actual. “En revisión” aún requiere confirmación dentro del juego.
         </p>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVER_EVENTS.map(({ name, status, note }) => (
-            <div
-              key={name}
-              className="rounded-card border border-amethyst/10 bg-obsidian p-6"
-            >
-              <div className="mb-3 flex items-center justify-between gap-3">
-                <h3 className="brand-heading text-lg text-ivory">{name}</h3>
-                <span className="font-sans flex shrink-0 items-center gap-1.5 text-[11px] tracking-[0.04em] text-ivory-muted uppercase">
-                  <span className={`h-1.5 w-1.5 rounded-full ${STATUS_DOT[status]}`} />
-                  {STATUS_LABEL[status]}
-                </span>
-              </div>
-              <p className="font-sans text-sm text-ivory-muted">{note}</p>
-            </div>
-          ))}
-        </div>
       </div>
-    </section>
-  );
-};
+      <ol className="border-l border-[#d7c58f]/30">
+        {SERVER_EVENTS.map(({ name, status, note }, index) => (
+          <li key={name} className="relative grid gap-3 border-b border-white/10 py-7 pl-8 sm:grid-cols-[3rem_1fr_auto]">
+            <span className="absolute top-9 -left-1 h-2 w-2 rotate-45 bg-[#d7c58f]" aria-hidden="true" />
+            <span className="font-display text-sm text-ivory/45">{String(index + 1).padStart(2, "0")}</span>
+            <div>
+              <h3 className="font-display text-xl font-semibold text-ivory">{name}</h3>
+              <p className="mt-2 font-sans text-sm leading-relaxed text-ivory/65">{note}</p>
+            </div>
+            <span className={`h-fit border px-2 py-1 font-sans text-xs ${STATUS_TONE[status]}`}>{STATUS_LABEL[status]}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+);
