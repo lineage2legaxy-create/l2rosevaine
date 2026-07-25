@@ -12,16 +12,21 @@ export const ServerStatus = ({ apiUrl = configuredApiUrl }: { apiUrl?: string | 
   useEffect(() => {
     if (!apiUrl) return;
     const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 5000);
+    let disposed = false;
+    let timedOut = false;
+    const timeout = window.setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, 5000);
     fetch(`${apiUrl}/api/public/server-status`, { signal: controller.signal, credentials: "omit" })
       .then((response) => {
         if (!response.ok) throw new Error("bad response");
         return response.json() as Promise<ServerStatusResponse>;
       })
-      .then((data) => { if (!controller.signal.aborted) setStatus(data); })
-      .catch(() => { if (!controller.signal.aborted) setFailed(true); })
+      .then((data) => { if (!disposed) setStatus(data); })
+      .catch(() => { if (!disposed && (timedOut || !controller.signal.aborted)) setFailed(true); })
       .finally(() => window.clearTimeout(timeout));
-    return () => { window.clearTimeout(timeout); controller.abort(); };
+    return () => { disposed = true; window.clearTimeout(timeout); controller.abort(); };
   }, [apiUrl]);
   const online = status?.loginServer === "online" && status.gameServer === "online";
   const state = failed ? "No disponible" : status ? (online ? "Online" : "Offline") : "Consultando…";
