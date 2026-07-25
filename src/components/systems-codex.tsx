@@ -1,11 +1,17 @@
 import { SERVER_SYSTEMS } from "@/constants";
 
 const PRIORITY_COUNT = 6;
-const atlasCell = (index: number) => ({
-  backgroundImage: "url('/media/rose-vaine-icon-atlas.png')",
-  backgroundSize: "300% 200%",
-  backgroundPosition: `${(index % 3) * 50}% ${Math.floor(index / 3) * 100}%`,
-});
+const ATLAS_X = ["0%", "33.333%", "66.667%", "100%"] as const;
+const ATLAS_Y = ["0%", "50%", "100%"] as const;
+const atlasCell = (index: number) => {
+  const column = index % 4;
+  const row = Math.floor(index / 4);
+  return {
+    backgroundImage: "url('/media/rose-vaine-icon-atlas.png')",
+    backgroundSize: "400% 300%",
+    backgroundPosition: `${ATLAS_X[column]} ${ATLAS_Y[row]}`,
+  };
+};
 
 export const SystemsCodex = () => {
   const priority = SERVER_SYSTEMS.slice(0, PRIORITY_COUNT);

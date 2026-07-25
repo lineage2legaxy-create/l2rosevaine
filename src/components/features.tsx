@@ -1,8 +1,15 @@
-const atlasCell = (column: number, row: number) => ({
+const ATLAS_X = ["0%", "33.333%", "66.667%", "100%"] as const;
+const ATLAS_Y = ["0%", "50%", "100%"] as const;
+
+const atlasCell = (index: number) => {
+  const column = index % 4;
+  const row = Math.floor(index / 4);
+  return {
   backgroundImage: "url('/media/rose-vaine-icon-atlas.png')",
-  backgroundSize: "300% 200%",
-  backgroundPosition: `${column * 50}% ${row * 100}%`,
-});
+  backgroundSize: "400% 300%",
+  backgroundPosition: `${ATLAS_X[column]} ${ATLAS_Y[row]}`,
+  };
+};
 
 export const Features = () => (
   <section id="features" className="bg-obsidian py-24 sm:py-32">
@@ -24,8 +31,8 @@ export const Features = () => (
       </figure>
       <div className="mt-16 grid gap-10 border-t border-white/10 pt-10 md:grid-cols-[0.7fr_1.3fr] md:items-center">
         <div className="grid grid-cols-2 gap-px bg-white/10">
-          <span className="aspect-square bg-obsidian" style={atlasCell(0, 0)} aria-hidden="true" />
-          <span className="aspect-square bg-obsidian" style={atlasCell(1, 0)} aria-hidden="true" />
+          <span className="aspect-square bg-obsidian" style={atlasCell(0)} aria-hidden="true" />
+          <span className="aspect-square bg-obsidian" style={atlasCell(1)} aria-hidden="true" />
         </div>
         <div className="md:pl-10">
           <h3 className="font-display text-3xl font-bold text-ivory sm:text-5xl">PvP con consecuencias</h3>

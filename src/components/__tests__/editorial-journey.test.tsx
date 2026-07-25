@@ -40,4 +40,22 @@ describe("editorial page journey", () => {
     expect(disabledActions.length).toBeGreaterThanOrEqual(5);
     disabledActions.forEach((action) => expect(action).not.toHaveAttribute("href"));
   });
+
+  it("slices the icon atlas as its native four-by-three grid", () => {
+    const { container } = render(<App />);
+    const atlasCells = Array.from(
+      container.querySelectorAll<HTMLElement>(
+        '[style*="rose-vaine-icon-atlas.png"]',
+      ),
+    );
+
+    expect(atlasCells.length).toBeGreaterThanOrEqual(8);
+    atlasCells.forEach((cell) => {
+      expect(cell.style.backgroundSize).toBe("400% 300%");
+      expect(cell.style.backgroundSize).not.toBe("300% 200%");
+    });
+    expect(atlasCells.map((cell) => cell.style.backgroundPosition)).toEqual(
+      expect.arrayContaining(["0% 0%", "33.333% 0%", "0% 50%"]),
+    );
+  });
 });
