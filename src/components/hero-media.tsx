@@ -8,11 +8,12 @@ function prefersStaticMedia() {
   const reducedMotion = window.matchMedia?.(
     "(prefers-reduced-motion: reduce)"
   ).matches;
+  const mobileViewport = window.matchMedia?.("(max-width: 480px)").matches;
   const connection = (
     navigator as Navigator & { connection?: { saveData?: boolean } }
   ).connection;
 
-  return Boolean(reducedMotion || connection?.saveData);
+  return Boolean(mobileViewport || reducedMotion || connection?.saveData);
 }
 
 export function HeroMedia() {
@@ -31,19 +32,25 @@ export function HeroMedia() {
     if (typeof window === "undefined" || !window.matchMedia) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const handleMotionPreference = (event: MediaQueryListEvent) => {
-      if (event.matches) {
+    const mobileViewport = window.matchMedia("(max-width: 480px)");
+    const updateStaticMedia = () => {
+      const shouldShowStatic =
+        mobileViewport.matches || reducedMotion.matches || saveData.current;
+
+      if (shouldShowStatic) {
         videoRef.current?.pause();
         setShowStaticMedia(true);
         return;
       }
 
-      if (!saveData.current) setShowStaticMedia(false);
+      setShowStaticMedia(false);
     };
 
-    reducedMotion.addEventListener("change", handleMotionPreference);
+    reducedMotion.addEventListener("change", updateStaticMedia);
+    mobileViewport.addEventListener("change", updateStaticMedia);
     return () => {
-      reducedMotion.removeEventListener("change", handleMotionPreference);
+      reducedMotion.removeEventListener("change", updateStaticMedia);
+      mobileViewport.removeEventListener("change", updateStaticMedia);
     };
   }, []);
 

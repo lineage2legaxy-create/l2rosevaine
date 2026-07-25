@@ -37,11 +37,69 @@ function setReducedMotion(matches: boolean) {
 
   Object.defineProperty(window, "matchMedia", {
     configurable: true,
-    value: vi.fn().mockReturnValue(mediaQuery),
+    value: vi.fn((query: string) =>
+      query === "(prefers-reduced-motion: reduce)"
+        ? mediaQuery
+        : {
+            ...mediaQuery,
+            matches: false,
+            media: query,
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+          }
+    ),
   });
 
   return {
     mediaQuery,
+    change(nextMatches: boolean) {
+      currentMatches = nextMatches;
+      const event = { matches: nextMatches } as MediaQueryListEvent;
+      listeners.forEach((listener) => listener(event));
+    },
+  };
+}
+
+function setMobileViewport(matches: boolean) {
+  let currentMatches = matches;
+  const listeners = new Set<(event: MediaQueryListEvent) => void>();
+  const mobileQuery = {
+    get matches() {
+      return currentMatches;
+    },
+    media: "(max-width: 480px)",
+    onchange: null,
+    addEventListener: vi.fn(
+      (_type: string, listener: (event: MediaQueryListEvent) => void) => {
+        listeners.add(listener);
+      }
+    ),
+    removeEventListener: vi.fn(
+      (_type: string, listener: (event: MediaQueryListEvent) => void) => {
+        listeners.delete(listener);
+      }
+    ),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  };
+  const reducedMotionQuery = {
+    ...mobileQuery,
+    matches: false,
+    media: "(prefers-reduced-motion: reduce)",
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+  };
+
+  Object.defineProperty(window, "matchMedia", {
+    configurable: true,
+    value: vi.fn((query: string) =>
+      query === "(max-width: 480px)" ? mobileQuery : reducedMotionQuery
+    ),
+  });
+
+  return {
+    mobileQuery,
     change(nextMatches: boolean) {
       currentMatches = nextMatches;
       const event = { matches: nextMatches } as MediaQueryListEvent;
@@ -163,6 +221,27 @@ describe("HeroMedia", () => {
       "src",
       "/media/rose-vaine-hero-mobile.webp"
     );
+  });
+
+  it("uses static media below 481px, reacts to viewport changes, and cleans up", () => {
+    const mobileViewport = setMobileViewport(true);
+    const { unmount } = render(<HeroMedia />);
+
+    expect(screen.getByTestId("hero-static-fallback")).toBeInTheDocument();
+    expect(screen.queryByRole("button")).toBeNull();
+    expect(mobileViewport.mobileQuery.addEventListener).toHaveBeenCalledOnce();
+
+    act(() => mobileViewport.change(false));
+
+    expect(document.querySelector("video")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Pausar escena" })
+    ).toBeInTheDocument();
+
+    unmount();
+    expect(
+      mobileViewport.mobileQuery.removeEventListener
+    ).toHaveBeenCalledOnce();
   });
 });
 

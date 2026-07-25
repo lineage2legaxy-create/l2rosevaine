@@ -220,6 +220,9 @@ button {
   border: 1px solid color-mix(in srgb, var(--color-steel) 45%, transparent);
   background: var(--color-obsidian-soft);
   clip-path: var(--clip-corner);
+  transition:
+    transform 180ms var(--ease-out-quart),
+    opacity 180ms var(--ease-out-quart);
 }
 
 .event-chronicle[data-status="online"],
@@ -342,6 +345,41 @@ a[href="#main-content"] {
 
   .inventory-icon:hover {
     border-color: var(--color-parchment);
+    transform: translateY(-3px);
+  }
+}
+
+@media (max-width: 480px) {
+  #hero {
+    display: grid;
+    min-height: 0;
+    grid-template-rows: minmax(18rem, 42svh) auto;
+  }
+
+  #hero > img {
+    position: relative;
+    grid-row: 1;
+    min-height: 18rem;
+  }
+
+  #hero > div:nth-of-type(1),
+  #hero > div:nth-of-type(2) {
+    bottom: auto;
+    height: 42svh;
+    min-height: 18rem;
+  }
+
+  #hero > div:last-child {
+    position: relative;
+    grid-row: 2;
+    min-height: 0;
+    padding-top: 2.5rem;
+    background: var(--color-obsidian);
+  }
+
+  #hero h1 {
+    font-size: clamp(2.5rem, 13vw, 3.5rem);
+    line-height: 1;
   }
 }
 
@@ -368,6 +406,32 @@ a[href="#main-content"] {
 }
 
 @media (min-width: 768px) {
+  #features > div > div:first-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
+    align-items: end;
+  }
+
+  #features > div > div:last-child {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.3fr);
+  }
+
+  #features > div > div > *,
+  #codex article > *,
+  #codex details li {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  #codex article {
+    grid-template-columns: 6rem minmax(9rem, 0.75fr) minmax(0, 1.25fr) auto;
+  }
+
+  #codex details ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .hud-rail {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
