@@ -20,7 +20,7 @@ export const Events = () => (
         {SERVER_EVENTS.map(({ name, status, note }, index) => (
           <li data-status={status} key={name} className="relative grid gap-3 border-b border-white/10 py-7 pl-8 sm:grid-cols-[3rem_1fr_auto]">
             <span className="absolute top-9 -left-1 h-2 w-2 rotate-45 bg-[#d7c58f]" aria-hidden="true" />
-            <span className="font-display text-sm text-ivory/45">{String(index + 1).padStart(2, "0")}</span>
+            <span className="font-display text-sm text-ivory-muted">{String(index + 1).padStart(2, "0")}</span>
             <div>
               <h3 className="font-display text-xl font-semibold text-ivory">{name}</h3>
               <p className="mt-2 font-sans text-sm leading-relaxed text-ivory/65">{note}</p>

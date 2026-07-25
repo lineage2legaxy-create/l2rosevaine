@@ -1,5 +1,3 @@
-import { FaDiscord, FaYoutube } from "react-icons/fa";
-
 export const NAV_ITEMS = [
   { label: "Inicio", href: "#hero" },
   { label: "El mundo", href: "#world" },
@@ -14,21 +12,6 @@ export const CTA_LINKS = {
   account: null,
   discord: null,
 } as const;
-
-export const LINKS = {
-  discord: "https://discord.com",
-} as const;
-
-export const SOCIAL_LINKS = [
-  {
-    href: "https://discord.com",
-    icon: FaDiscord,
-  },
-  {
-    href: "https://youtube.com",
-    icon: FaYoutube,
-  },
-] as const;
 
 export const SERVER_INFO = {
   name: "ROSE VAINE",
