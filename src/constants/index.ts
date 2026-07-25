@@ -95,7 +95,7 @@ export const SERVER_SYSTEMS = [
   { title: "Motor de movimiento estilo L2OFF", body: "Pathfinding y movimiento optimizados (Catmull-Rom, cache L2BR) para reducir bloqueos y atravesar menos paredes.", runtimeVerified: false },
   { title: "AutoFarm configurable", body: "Sistema propio de zonas y rutas de auto-farmeo, con límites de área, tiempo y objetivo por jugador.", runtimeVerified: false },
   { title: "Offline Farm (.away)", body: "Seguí farmeando mientras estás desconectado, con límites de cuentas simultáneas por IP.", runtimeVerified: false },
-  { title: "Buff Shop", body: "Vendele tus buffs a otros jugadores con .sellbuff / .sellbuffs, hasta 25 buffs en venta a la vez.", runtimeVerified: false },
+  { title: "Buff Shop", body: "Vendéle tus buffs a otros jugadores con .sellbuff / .sellbuffs, hasta 25 buffs en venta a la vez.", runtimeVerified: false },
   { title: "Skill Shop", body: "Compra skills permanentes y profecías con Adena y un ítem especial de progresión.", runtimeVerified: false },
   { title: "OfflineShop / OfflineCraft", body: "Tienda y crafteo sin estar conectado.", runtimeVerified: false },
   { title: "Banco de Adena", body: "Comandos .bank / .deposit / .withdraw para guardar Adena en barras de oro.", runtimeVerified: false },
