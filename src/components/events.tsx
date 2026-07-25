@@ -18,14 +18,14 @@ export const Events = () => (
       </div>
       <ol className="border-l border-[#d7c58f]/30">
         {SERVER_EVENTS.map(({ name, status, note }, index) => (
-          <li key={name} className="relative grid gap-3 border-b border-white/10 py-7 pl-8 sm:grid-cols-[3rem_1fr_auto]">
+          <li data-status={status} key={name} className="relative grid gap-3 border-b border-white/10 py-7 pl-8 sm:grid-cols-[3rem_1fr_auto]">
             <span className="absolute top-9 -left-1 h-2 w-2 rotate-45 bg-[#d7c58f]" aria-hidden="true" />
             <span className="font-display text-sm text-ivory/45">{String(index + 1).padStart(2, "0")}</span>
             <div>
               <h3 className="font-display text-xl font-semibold text-ivory">{name}</h3>
               <p className="mt-2 font-sans text-sm leading-relaxed text-ivory/65">{note}</p>
             </div>
-            <span className={`h-fit border px-2 py-1 font-sans text-xs ${STATUS_TONE[status]}`}>{STATUS_LABEL[status]}</span>
+            <time className={`h-fit border px-2 py-1 font-sans text-xs ${STATUS_TONE[status]}`}>{STATUS_LABEL[status]}</time>
           </li>
         ))}
       </ol>

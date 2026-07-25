@@ -21,6 +21,11 @@ describe("editorial page journey", () => {
       "#main-content",
     );
     expect(container.querySelector("section#events ol")).toBeInTheDocument();
+    const eventItems = container.querySelectorAll("section#events ol > li[data-status]");
+    expect(eventItems.length).toBeGreaterThan(0);
+    eventItems.forEach((item) => {
+      expect(item.querySelector("time")).toBeInTheDocument();
+    });
     expect(container.querySelector("footer#community")).toBeInTheDocument();
   });
 
