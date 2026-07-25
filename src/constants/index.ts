@@ -17,8 +17,6 @@ export const SERVER_INFO = {
   name: "ROSE VAINE",
   subtitle: "Interlude Custom",
   chronicle: "Interlude",
-  loginHost: "127.0.0.1",
-  loginPort: 2106,
   type: "PvP",
   maxOnline: 3000,
 } as const;

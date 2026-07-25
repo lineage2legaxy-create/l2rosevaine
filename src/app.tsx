@@ -9,7 +9,7 @@ import { EnterWorld } from "@/components/enter-world";
 
 const App = () => {
   return (
-    <div className="relative min-h-screen w-screen overflow-x-hidden bg-obsidian">
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-obsidian">
       <a href="#main-content" className="fixed top-3 left-3 z-[100] -translate-y-20 border border-[#d7c58f] bg-obsidian px-4 py-3 font-sans text-sm text-ivory focus:translate-y-0">
         Saltar al contenido
       </a>

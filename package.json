@@ -12,6 +12,7 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "preview": "vite preview",
+    "start": "node server.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },

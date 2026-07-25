@@ -1,23 +1,28 @@
 import { useEffect, useState } from "react";
 import { SERVER_EVENTS, SERVER_INFO } from "@/constants";
+import { validateApiUrl } from "@/lib/api-url";
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 interface ServerStatusResponse { loginServer: "online" | "offline"; gameServer: "online" | "offline"; }
 
-export const ServerStatus = () => {
+const configuredApiUrl = validateApiUrl(import.meta.env.VITE_API_URL, import.meta.env.DEV);
+
+export const ServerStatus = ({ apiUrl = configuredApiUrl }: { apiUrl?: string | null }) => {
   const [status, setStatus] = useState<ServerStatusResponse | null>(null);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState(apiUrl === null);
   useEffect(() => {
-    let cancelled = false;
-    fetch(`${API_URL}/api/public/server-status`)
+    if (!apiUrl) return;
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 5000);
+    fetch(`${apiUrl}/api/public/server-status`, { signal: controller.signal, credentials: "omit" })
       .then((response) => {
         if (!response.ok) throw new Error("bad response");
         return response.json() as Promise<ServerStatusResponse>;
       })
-      .then((data) => { if (!cancelled) setStatus(data); })
-      .catch(() => { if (!cancelled) setFailed(true); });
-    return () => { cancelled = true; };
-  }, []);
+      .then((data) => { if (!controller.signal.aborted) setStatus(data); })
+      .catch(() => { if (!controller.signal.aborted) setFailed(true); })
+      .finally(() => window.clearTimeout(timeout));
+    return () => { window.clearTimeout(timeout); controller.abort(); };
+  }, [apiUrl]);
   const online = status?.loginServer === "online" && status.gameServer === "online";
   const state = failed ? "No disponible" : status ? (online ? "Online" : "Offline") : "Consultando…";
   const activeEvent = SERVER_EVENTS.find(({ status: eventStatus }) => eventStatus === "activo");
