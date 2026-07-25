@@ -1,139 +1,142 @@
-import gsap from "gsap";
-import { useEffect, useRef, useState } from "react";
-import { useWindowScroll } from "react-use";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { NAV_ITEMS } from "@/constants";
+import { CTA_LINKS, NAV_ITEMS } from "@/constants";
 import { cn } from "@/lib/utils";
 
-import { Button } from "./button";
+import { ChronicleButton } from "./chronicle-button";
+import { LineageMark } from "./lineage-mark";
 
 export const Navbar = () => {
-  const navContainerRef = useRef<HTMLDivElement>(null);
-
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [isNavVisible, setIsNavVisible] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
-  const { y: currentScrollY } = useWindowScroll();
-
-  useEffect(() => {
-    if (currentScrollY === 0) {
-      setIsNavVisible(true);
-      navContainerRef.current?.classList.remove("floating-nav");
-    } else if (currentScrollY > lastScrollY) {
-      setIsNavVisible(false);
-      navContainerRef.current?.classList.add("floating-nav");
-    } else if (currentScrollY < lastScrollY) {
-      setIsNavVisible(true);
-      navContainerRef.current?.classList.add("floating-nav");
-    }
-
-    setLastScrollY(currentScrollY);
-  }, [currentScrollY, lastScrollY]);
-
-  useEffect(() => {
-    gsap.to(navContainerRef.current, {
-      y: isNavVisible ? 0 : -100,
-      opacity: isNavVisible ? 1 : 0,
-      duration: 0.2,
-      ease: "power1.out",
-    });
-  }, [isNavVisible]);
-
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsMobileOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+  const closeMenu = useCallback((restoreFocus = true) => {
+    setIsMobileOpen(false);
+    if (restoreFocus) requestAnimationFrame(() => triggerRef.current?.focus());
   }, []);
 
+  useEffect(() => {
+    if (!isMobileOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    firstLinkRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeMenu();
+    };
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (
+        !dialogRef.current?.contains(target) &&
+        !triggerRef.current?.contains(target)
+      ) {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [closeMenu, isMobileOpen]);
+
   return (
-    <header
-      ref={navContainerRef}
-      className="fixed inset-x-0 top-4 z-50 h-16 border-none transition-all duration-700 sm:inset-x-6"
-    >
-      <div className="absolute top-1/2 w-full -translate-y-1/2">
-        <nav className="flex size-full items-center justify-between px-4">
-          <a
-            href="#hero"
-            className="brand-heading text-lg text-ivory transition hover:text-amethyst sm:text-xl"
-          >
-            ROSE <span className="text-amethyst">VAINE</span>
-          </a>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#09070d]/92 backdrop-blur-md">
+      <nav
+        aria-label="Navegación principal"
+        className="mx-auto flex h-18 max-w-[1400px] items-center justify-between px-4 sm:px-6 lg:px-10"
+      >
+        <a
+          href="#hero"
+          aria-label="Rose Vaine, ir al inicio"
+          className="focus-visible:outline-ivory focus-visible:outline-2 focus-visible:outline-offset-4"
+        >
+          <LineageMark />
+        </a>
 
-          <div className="hidden h-full items-center lg:flex">
-            {NAV_ITEMS.map(({ label, href }) => (
-              <a key={href} href={href} className="nav-link">
-                {label}
-              </a>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3">
+        <div className="hidden items-center gap-1 lg:flex">
+          {NAV_ITEMS.map(({ label, href }) => (
             <a
-              href="#login"
-              className="font-sans hidden text-[13px] font-semibold tracking-[0.04em] text-ivory/80 uppercase transition hover:text-ivory sm:inline-block"
+              key={href}
+              href={href}
+              className="text-ivory/78 hover:text-ivory focus-visible:outline-ivory px-3 py-3 font-sans text-xs font-semibold tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-offset-2"
             >
-              Mi cuenta
+              {label}
             </a>
+          ))}
+        </div>
 
-            <Button
-              id="register-button"
-              containerClass="hidden sm:flex"
-            >
-              Crear cuenta
-            </Button>
+        <div className="hidden lg:block">
+          <ChronicleButton
+            href={CTA_LINKS.account}
+            variant="violet"
+            ariaLabel="Crear cuenta"
+          >
+            Crear cuenta
+          </ChronicleButton>
+        </div>
 
-            <button
-              type="button"
-              aria-label="Abrir menu"
-              aria-expanded={isMobileOpen}
-              onClick={() => setIsMobileOpen((v) => !v)}
-              className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-input border border-amethyst/20 lg:hidden"
-            >
-              <span
-                className={cn(
-                  "h-px w-4 bg-ivory transition-transform duration-200",
-                  isMobileOpen && "translate-y-[3.5px] rotate-45"
-                )}
-              />
-              <span
-                className={cn(
-                  "h-px w-4 bg-ivory transition-transform duration-200",
-                  isMobileOpen && "-translate-y-[3.5px] -rotate-45"
-                )}
-              />
-            </button>
-          </div>
-        </nav>
-      </div>
+        <button
+          ref={triggerRef}
+          type="button"
+          aria-label={isMobileOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={isMobileOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setIsMobileOpen((open) => !open)}
+          className="border-amethyst/45 text-ivory focus-visible:outline-ivory flex min-h-11 min-w-11 flex-col items-center justify-center gap-1.5 border bg-[#110d18]/90 focus-visible:outline-2 focus-visible:outline-offset-4 lg:hidden"
+        >
+          <span
+            className={cn(
+              "h-px w-5 bg-current transition-transform duration-200 ease-out",
+              isMobileOpen && "translate-y-[3.5px] rotate-45"
+            )}
+          />
+          <span
+            className={cn(
+              "h-px w-5 bg-current transition-transform duration-200 ease-out",
+              isMobileOpen && "-translate-y-[3.5px] -rotate-45"
+            )}
+          />
+        </button>
+      </nav>
 
       {isMobileOpen && (
-        <div className="absolute top-[calc(100%+0.5rem)] right-0 left-0 rounded-card border border-amethyst/15 bg-obsidian-soft/97 p-4 backdrop-blur-md lg:hidden">
-          <div className="flex flex-col gap-1">
-            {NAV_ITEMS.map(({ label, href }) => (
+        <div
+          ref={dialogRef}
+          id="mobile-navigation"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navegación principal"
+          className="absolute inset-x-3 top-[calc(100%+0.5rem)] border border-[#d7c58f]/25 bg-[#0c0911] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.55)] lg:hidden"
+        >
+          <div className="flex flex-col">
+            {NAV_ITEMS.map(({ label, href }, index) => (
               <a
+                ref={index === 0 ? firstLinkRef : undefined}
                 key={href}
                 href={href}
-                onClick={() => setIsMobileOpen(false)}
-                className="font-sans rounded-input px-3 py-2.5 text-sm tracking-[0.02em] text-ivory/85 uppercase transition hover:bg-amethyst/10 hover:text-ivory"
+                onClick={() => closeMenu(false)}
+                className="border-b border-white/8 px-3 py-3.5 font-sans text-sm font-semibold tracking-[0.04em] text-ivory/85 uppercase hover:bg-white/5 hover:text-ivory focus-visible:bg-white/5 focus-visible:outline-none"
               >
                 {label}
               </a>
             ))}
-            <a
-              href="#login"
-              onClick={() => setIsMobileOpen(false)}
-              className="font-sans rounded-input px-3 py-2.5 text-sm tracking-[0.02em] text-ivory/85 uppercase transition hover:bg-amethyst/10 hover:text-ivory"
-            >
-              Mi cuenta
-            </a>
           </div>
-
-          <Button id="register-button-mobile" containerClass="mt-3 w-full">
-            Crear cuenta
-          </Button>
+          <div className="mt-4">
+            <ChronicleButton
+              href={CTA_LINKS.account}
+              variant="violet"
+              ariaLabel="Crear cuenta"
+            >
+              Crear cuenta
+            </ChronicleButton>
+          </div>
         </div>
       )}
     </header>
