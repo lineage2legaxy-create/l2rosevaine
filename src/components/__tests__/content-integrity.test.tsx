@@ -20,6 +20,10 @@ describe("public content integrity", () => {
   });
 
   it("defines a status for every server event", () => {
-    expect(SERVER_EVENTS.every(({ status }) => status !== undefined)).toBe(true);
+    const allowedStatuses = new Set(["activo", "en_revision", "proximamente"]);
+
+    expect(
+      SERVER_EVENTS.every(({ status }) => allowedStatuses.has(status)),
+    ).toBe(true);
   });
 });

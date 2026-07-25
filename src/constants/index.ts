@@ -58,6 +58,14 @@ export const SERVER_RATES = [
 // "activo": confirmado por el administrador como en ejecución ahora mismo.
 // "en_revision": el código existe y no tiene flag de desactivado, pero todavía no fue confirmado en juego.
 // "proximamente": el motor existe en el código pero está explícitamente desactivado (Enabled = False).
+export type EventStatus = "activo" | "en_revision" | "proximamente";
+
+interface ServerEvent {
+  readonly name: string;
+  readonly status: EventStatus;
+  readonly note: string;
+}
+
 export const SERVER_EVENTS = [
   { name: "Olympiad", status: "activo", note: "Combates 1v1/2v2 semanales, ranking de Héroes" },
   { name: "Torneo de pesca", status: "activo", note: "Premios de hasta 800.000 adena" },
@@ -70,7 +78,7 @@ export const SERVER_EVENTS = [
   { name: "Deathmatch", status: "proximamente", note: "Motor de evento presente, desactivado en la configuración actual" },
   { name: "Last Man Standing", status: "proximamente", note: "Motor de evento presente, desactivado en la configuración actual" },
   { name: "Team vs Team (TvT)", status: "proximamente", note: "Motor de evento presente, desactivado en la configuración actual" },
-] as const;
+] as const satisfies readonly ServerEvent[];
 
 // Snapshot general extraído de players.properties, mods.properties, protection.properties, siege.properties.
 export const SERVER_OVERVIEW = [
@@ -96,7 +104,7 @@ export const SERVER_SYSTEMS = [
   { title: "AutoFarm configurable", body: "Sistema propio de zonas y rutas de auto-farmeo, con límites de área, tiempo y objetivo por jugador.", runtimeVerified: false },
   { title: "Offline Farm (.away)", body: "Seguí farmeando mientras estás desconectado, con límites de cuentas simultáneas por IP.", runtimeVerified: false },
   { title: "Buff Shop", body: "Vendéle tus buffs a otros jugadores con .sellbuff / .sellbuffs, hasta 25 buffs en venta a la vez.", runtimeVerified: false },
-  { title: "Skill Shop", body: "Compra skills permanentes y profecías con Adena y un ítem especial de progresión.", runtimeVerified: false },
+  { title: "Skill Shop", body: "Comprá skills permanentes y profecías con Adena y un ítem especial de progresión.", runtimeVerified: false },
   { title: "OfflineShop / OfflineCraft", body: "Tienda y crafteo sin estar conectado.", runtimeVerified: false },
   { title: "Banco de Adena", body: "Comandos .bank / .deposit / .withdraw para guardar Adena en barras de oro.", runtimeVerified: false },
   { title: "Casa de subastas", body: "Sistema de auction propio para vender ítems entre jugadores.", runtimeVerified: false },
