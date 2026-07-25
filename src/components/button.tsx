@@ -20,18 +20,17 @@ export const Button = ({
   return (
     <button
       id={id}
+      type="button"
       className={cn(
-        "group relative z-10 flex w-fit cursor-pointer items-center gap-2 overflow-hidden rounded-[999px] bg-amethyst px-7 py-3 text-obsidian transition-transform duration-150 ease-out active:scale-[0.97]",
+        "button-chronicle group focus-visible:outline-ivory relative z-10 inline-flex w-fit cursor-pointer items-center justify-center gap-2 overflow-hidden px-7 py-3 font-sans text-xs font-bold tracking-[0.06em] whitespace-nowrap uppercase focus-visible:outline-2 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-50",
         containerClass
       )}
     >
-      {LeftIcon ? <LeftIcon /> : null}
+      {LeftIcon ? <LeftIcon aria-hidden="true" focusable="false" /> : null}
 
-      <p className="font-sans relative inline-flex overflow-hidden text-xs font-semibold tracking-[0.04em] whitespace-nowrap uppercase">
-        {children}
-      </p>
+      <span className="relative inline-flex overflow-hidden">{children}</span>
 
-      {RightIcon ? <RightIcon /> : null}
+      {RightIcon ? <RightIcon aria-hidden="true" focusable="false" /> : null}
     </button>
   );
 };
