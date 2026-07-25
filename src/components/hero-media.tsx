@@ -39,6 +39,7 @@ export function HeroMedia() {
 
       if (shouldShowStatic) {
         videoRef.current?.pause();
+        setIsPaused(false);
         setShowStaticMedia(true);
         return;
       }
@@ -112,7 +113,7 @@ export function HeroMedia() {
         onClick={() => {
           void togglePlayback();
         }}
-        className="bg-obsidian/85 text-ivory focus-visible:outline-ivory absolute right-4 bottom-4 z-20 min-h-11 border border-[#d7c58f]/60 px-4 font-sans text-xs font-bold tracking-[0.04em] uppercase [clip-path:polygon(7px_0,100%_0,100%_calc(100%-7px),calc(100%-7px)_100%,0_100%,0_7px)] focus-visible:outline-2 focus-visible:outline-offset-4 motion-safe:transition-[transform,background-color,border-color] motion-safe:duration-200 motion-safe:ease-[var(--ease-out-quart)] motion-safe:active:scale-[0.97]"
+        className="hero-media-control bg-obsidian/85 text-ivory absolute right-4 bottom-4 z-20 min-h-11 border border-[#d7c58f]/60 px-4 font-sans text-xs font-bold tracking-[0.04em] uppercase [clip-path:polygon(7px_0,100%_0,100%_calc(100%-7px),calc(100%-7px)_100%,0_100%,0_7px)] motion-safe:transition-[transform,background-color,border-color] motion-safe:duration-200 motion-safe:ease-[var(--ease-out-quart)] motion-safe:active:scale-[0.97]"
       >
         {isPaused ? "Reproducir" : "Pausar"}
       </button>

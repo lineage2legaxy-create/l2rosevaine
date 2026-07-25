@@ -9,6 +9,7 @@ import {
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ChronicleButton } from "@/components/chronicle-button";
+import { Button } from "@/components/button";
 import { HeroMedia } from "@/components/hero-media";
 
 function setReducedMotion(matches: boolean) {
@@ -242,6 +243,62 @@ describe("HeroMedia", () => {
     expect(
       mobileViewport.mobileQuery.removeEventListener
     ).toHaveBeenCalledOnce();
+  });
+
+  it("restores the autoplay label after a paused video crosses the mobile breakpoint", () => {
+    const mobileViewport = setMobileViewport(false);
+    vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(
+      () => undefined
+    );
+    render(<HeroMedia />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Pausar escena" }));
+    expect(
+      screen.getByRole("button", { name: "Reproducir escena" })
+    ).toBeInTheDocument();
+
+    act(() => mobileViewport.change(true));
+    expect(screen.queryByRole("button")).toBeNull();
+
+    act(() => mobileViewport.change(false));
+    expect(
+      screen.getByRole("button", { name: "Pausar escena" })
+    ).toBeInTheDocument();
+  });
+});
+
+describe("Button", () => {
+  it("forwards native button props and defaults its type safely", () => {
+    const onClick = vi.fn();
+    const { rerender } = render(
+      <Button
+        aria-label="Acción"
+        className="native-button-class"
+        disabled
+        onClick={onClick}
+      >
+        Acción
+      </Button>
+    );
+
+    const button = screen.getByRole("button", { name: "Acción" });
+    expect(button).toHaveAttribute("type", "button");
+    expect(button).toHaveClass("native-button-class");
+    expect(button).toBeDisabled();
+    fireEvent.click(button);
+    expect(onClick).not.toHaveBeenCalled();
+
+    rerender(
+      <Button aria-label="Enviar" type="submit" onClick={onClick}>
+        Enviar
+      </Button>
+    );
+    expect(screen.getByRole("button", { name: "Enviar" })).toHaveAttribute(
+      "type",
+      "submit"
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Enviar" }));
+    expect(onClick).toHaveBeenCalledOnce();
   });
 });
 

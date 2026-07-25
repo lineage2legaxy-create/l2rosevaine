@@ -33,8 +33,8 @@
 
   /* Compatibility aliases for existing utilities. */
   --color-imperial: var(--color-violet);
-  --color-amethyst: var(--color-violet);
-  --color-amethyst-soft: var(--color-violet);
+  --color-amethyst: #c49add;
+  --color-amethyst-soft: #c49add;
   --color-silver: var(--color-steel);
 
   --clip-corner: polygon(
@@ -63,8 +63,8 @@
   --color-online-green: #85bd79;
   --color-alert-red: #d56b63;
   --color-imperial: #9e62bf;
-  --color-amethyst: #9e62bf;
-  --color-amethyst-soft: #9e62bf;
+  --color-amethyst: #c49add;
+  --color-amethyst-soft: #c49add;
   --color-silver: #8c867d;
   --font-display: "Cinzel", Georgia, serif;
   --font-sans: "Manrope", "Segoe UI", sans-serif;
@@ -205,6 +205,16 @@ button {
   transform: scale(0.97);
 }
 
+.chronicle-button:focus-visible,
+.button-chronicle:focus-visible,
+.hero-media-control:focus-visible {
+  border-color: var(--color-ivory);
+  outline: none;
+  box-shadow:
+    inset 0 0 0 2px var(--color-obsidian),
+    inset 0 0 0 4px var(--color-ivory);
+}
+
 .lineage-rune {
   color: var(--color-parchment);
   filter: drop-shadow(
@@ -329,8 +339,8 @@ a[href="#main-content"] {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .chronicle-button:hover,
-  .button-chronicle:hover {
+  .chronicle-button:hover:not(:active),
+  .button-chronicle:hover:not(:active) {
     transform: translateY(-2px);
   }
 
