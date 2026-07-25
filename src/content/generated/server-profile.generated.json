@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "generatedFrom": "C:\\BRProject-Lab\\Server\\Public_Brproject\\Brproject_Distribution\\game\\config",
+    "extractedAt": "2026-07-24",
+    "sourceOfTruth": "local BRProject config files (not the public repo)"
+  },
+  "brand": {
+    "name": "ROSE VAINE",
+    "subtitle": "INTERLUDE CUSTOM",
+    "publicNameInServerList": null
+  },
+  "technical": {
+    "chronicle": "Interlude",
+    "type": "Custom PvP/PvE (PvpServer = true)",
+    "maxOnlineUsers": 3000,
+    "geoDataType": "L2J",
+    "movementEngine": {
+      "useOptimizedMovement": true,
+      "l2ofStyleMovement": true,
+      "useL2BRPathfinding": true,
+      "attackUsePathfinder": true,
+      "runtimeVerified": false,
+      "notes": "Confirmado en geoengine.properties. Falta confirmar en juego que no hay bloqueos/atravesos."
+    },
+    "loginServerPort": "no publicar (uso interno)",
+    "gameServerPort": "no publicar (uso interno)",
+    "database": "MariaDB (motor confirmado, credenciales no expuestas)",
+    "javaVersion": "no verificado en esta extraccion",
+    "gitCommit": "no verificado en esta extraccion (repo local en C:\\BRProject-Lab\\Server\\Public_Brproject\\.git)"
+  },
+  "security": {
+    "hwidProtection": {
+      "codePresent": true,
+      "configEnabled": true,
+      "runtimeVerified": false,
+      "publicVisible": true,
+      "publicText": "Proteccion por HWID: limite de ventanas por PC y control anti multi-cuenta.",
+      "notes": "AllowGuardSystem=true, UseClientHWID=3 (CPU), AllowedWindowsCount=2 en protection.properties"
+    }
+  },
+  "neverExpose": [
+    "sql.password",
+    "sql.login privilegiado",
+    "IP privada / hostnames internos",
+    "rutas de archivos del servidor",
+    "HWID de jugadores individuales",
+    "stack traces"
+  ]
+}

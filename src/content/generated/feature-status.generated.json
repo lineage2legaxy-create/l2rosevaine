@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "generatedFrom": "game/config/mods.properties, project.properties, geoengine.properties, siege.properties (BRProject local)",
+    "note": "Todos codePresent=true y configEnabled=true (confirmado en archivos de config). runtimeVerified=false hasta probar cada sistema dentro del juego. publicVisible=true solo cuando runtimeVerified=true, salvo excepcion documentada."
+  },
+  "features": [
+    { "id": "movement-l2off", "title": "Motor de movimiento estilo L2OFF", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true, "notes": "Se muestra como beneficio tecnico general sin prometer 'sin bugs'." },
+    { "id": "autofarm", "title": "AutoFarm configurable", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "offline-farm", "title": "Offline Farm (.away)", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "buff-shop", "title": "Buff Shop (.sellbuff)", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "skill-shop", "title": "Skill Shop (skills permanentes)", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "offline-shop", "title": "OfflineShop / OfflineCraft", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "banking", "title": "Banco de Adena (.bank)", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "auction", "title": "Casa de subastas", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "kamaloka", "title": "Kamaloka instanciada", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "battleboss", "title": "BattleBoss (Rumble)", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "agathion", "title": "Agathion (pet-buff)", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "dressme", "title": "DressMe (cosmeticos)", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "roulette-capsule", "title": "Roulette y Capsule Box", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "tournaments", "title": "Torneos PvP", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "hwid-protection", "title": "Proteccion HWID / anti multi-cuenta", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "bosszerg", "title": "Anti-zerg en raids (BossZerg)", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true },
+    { "id": "deepl-translator", "title": "Traductor con IA (DeepL) para dialogos de NPC", "codePresent": true, "configEnabled": false, "runtimeVerified": false, "publicVisible": false, "notes": "Presente en libs (DeepL.jar/deepl-java) pero no confirmado como habilitado. No publicar hasta confirmar." },
+    { "id": "country-locale", "title": "CountryLocale (idioma por pais)", "codePresent": false, "configEnabled": false, "runtimeVerified": false, "publicVisible": false, "notes": "Mencionado por el administrador, no localizado todavia en la config revisada. No publicar hasta encontrar y confirmar el archivo/clase correspondiente." },
+    { "id": "siege", "title": "Asedios de castillo", "codePresent": true, "configEnabled": true, "runtimeVerified": false, "publicVisible": true, "notes": "SiegeLength=120min, min nivel de clan 4, hasta 10 clanes atacantes y 10 defensores (siege.properties)." }
+  ]
+}

@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@tailwind utilities;
+
+@font-face {
+  font-family: "Cinzel";
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url("/fonts/cinzel-variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/manrope-variable.woff2") format("woff2");
+}
+
+:root {
+  --color-obsidian: #07060c;
+  --color-obsidian-soft: #0d0915;
+  --color-surface: #150f24;
+  --color-imperial: #6e24d9;
+  --color-amethyst: #a644ff;
+  --color-amethyst-soft: #c48bff;
+  --color-arcane-pink: #ed4dc4;
+  --color-electric-blue: #436bff;
+  --color-silver: #d8d7e6;
+  --color-ivory: #f2eef7;
+  --color-ivory-muted: #a9a3bb;
+  --color-online-green: #5cdb95;
+  --color-alert-red: #e05666;
+
+  --radius-btn: 999px;
+  --radius-card: 1rem;
+  --radius-input: 0.5rem;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+body {
+  width: 100dvw;
+  overflow-x: hidden;
+  background-color: var(--color-obsidian);
+  color: var(--color-ivory);
+  font-family: "Manrope", sans-serif;
+}
+
+@theme {
+  --color-obsidian: #07060c;
+  --color-obsidian-soft: #0d0915;
+  --color-surface: #150f24;
+  --color-imperial: #6e24d9;
+  --color-amethyst: #a644ff;
+  --color-amethyst-soft: #c48bff;
+  --color-arcane-pink: #ed4dc4;
+  --color-electric-blue: #436bff;
+  --color-silver: #d8d7e6;
+  --color-ivory: #f2eef7;
+  --color-ivory-muted: #a9a3bb;
+  --color-online-green: #5cdb95;
+  --color-alert-red: #e05666;
+
+  --font-display: "Cinzel", serif;
+  --font-sans: "Manrope", sans-serif;
+
+  --radius-btn: 999px;
+  --radius-card: 1rem;
+  --radius-input: 0.5rem;
+}
+
+@layer base {
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-ivory-muted);
+  }
+
+  ::selection {
+    background-color: var(--color-amethyst);
+    color: var(--color-obsidian);
+  }
+}
+
+@layer utilities {
+  .border-hsla {
+    @apply border border-amethyst/20;
+  }
+
+  .nav-link {
+    @apply font-sans relative ms-8 cursor-pointer text-[13px] tracking-[0.04em] text-ivory/80 uppercase transition after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-bottom-right after:scale-x-0 after:bg-amethyst after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65,0.05,0.36,1)] hover:text-ivory hover:after:origin-bottom-left hover:after:scale-x-100;
+  }
+
+  .floating-nav {
+    @apply rounded-xl border border-amethyst/15 bg-obsidian-soft/90 backdrop-blur-md;
+  }
+
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%];
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .mask-clip-path {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .brand-heading {
+    @apply font-display font-black tracking-[0.02em] uppercase;
+  }
+}
+
+.indicator-line {
+  @apply h-1 w-px rounded-full bg-amethyst transition-all duration-200 ease-in-out;
+}
+
+.indicator-line.active {
+  animation: indicator-line 0.5s ease infinite;
+  animation-delay: calc(var(--animation-order) * 0.1s);
+}
+
+@keyframes indicator-line {
+  0% {
+    height: 4px;
+    transform: translateY(0);
+  }
+  50% {
+    height: 16px;
+    transform: translateY(-4px);
+  }
+  100% {
+    height: 4px;
+    transform: translateY(0);
+  }
+}
+
+/* Hero ember particles: transform/opacity only, GPU-cheap */
+.ember {
+  position: absolute;
+  bottom: -10%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-amethyst-soft);
+  box-shadow: 0 0 6px 1px var(--color-amethyst);
+  opacity: 0;
+  animation: ember-rise linear infinite;
+}
+
+@keyframes ember-rise {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-70vh) translateX(var(--drift, 20px));
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ember {
+    animation: none;
+    opacity: 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

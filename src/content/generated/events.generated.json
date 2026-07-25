@@ -1,0 +1,96 @@
+{
+  "_meta": {
+    "generatedFrom": "game/config/events.properties (BRProject local)",
+    "note": "codePresent=true para todos: los motores existen en el codigo. configEnabled refleja el flag Enabled del .properties cuando existe explicitamente. runtimeVerified=true solo cuando el administrador confirmo que esta corriendo ahora mismo."
+  },
+  "events": [
+    {
+      "name": "Olympiad",
+      "codePresent": true,
+      "configEnabled": true,
+      "runtimeVerified": true,
+      "publicVisible": true,
+      "notes": "Confirmado activo por el administrador."
+    },
+    {
+      "name": "Fishing Championship",
+      "codePresent": true,
+      "configEnabled": true,
+      "runtimeVerified": true,
+      "publicVisible": true,
+      "notes": "Confirmado activo por el administrador. Recompensas: 800000/500000/300000/200000/100000 adena."
+    },
+    {
+      "name": "Seven Signs & Festival",
+      "codePresent": true,
+      "configEnabled": true,
+      "runtimeVerified": false,
+      "publicVisible": false,
+      "notes": "Configuracion presente sin flag de desactivado. No confirmado en juego todavia."
+    },
+    {
+      "name": "Four Sepulchers",
+      "codePresent": true,
+      "configEnabled": true,
+      "runtimeVerified": false,
+      "publicVisible": false,
+      "notes": "Configuracion presente sin flag de desactivado. No confirmado en juego todavia."
+    },
+    {
+      "name": "Dimension Rift",
+      "codePresent": true,
+      "configEnabled": true,
+      "runtimeVerified": false,
+      "publicVisible": false,
+      "notes": "Configuracion presente sin flag de desactivado. No confirmado en juego todavia."
+    },
+    {
+      "name": "Loteria del servidor",
+      "codePresent": true,
+      "configEnabled": true,
+      "runtimeVerified": false,
+      "publicVisible": false,
+      "notes": "Pozo inicial 50000 adena, ticket 2000 adena. No confirmado en juego todavia."
+    },
+    {
+      "name": "Cofre de las Sombras",
+      "codePresent": true,
+      "configEnabled": true,
+      "runtimeVerified": false,
+      "publicVisible": false,
+      "notes": "No confirmado en juego todavia."
+    },
+    {
+      "name": "Capture the Flag (CTF)",
+      "codePresent": true,
+      "configEnabled": false,
+      "runtimeVerified": false,
+      "publicVisible": false,
+      "notes": "CTFEventEnabled = False en la config actual."
+    },
+    {
+      "name": "Deathmatch",
+      "codePresent": true,
+      "configEnabled": false,
+      "runtimeVerified": false,
+      "publicVisible": false,
+      "notes": "DMEventEnabled = False en la config actual."
+    },
+    {
+      "name": "Last Man Standing",
+      "codePresent": true,
+      "configEnabled": false,
+      "runtimeVerified": false,
+      "publicVisible": false,
+      "notes": "LMEventEnabled = False en la config actual."
+    },
+    {
+      "name": "Team vs Team (TvT)",
+      "codePresent": true,
+      "configEnabled": false,
+      "runtimeVerified": false,
+      "publicVisible": false,
+      "notes": "TvTEventEnabled = False en la config actual."
+    }
+  ]
+}

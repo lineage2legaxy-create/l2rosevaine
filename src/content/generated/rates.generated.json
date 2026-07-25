@@ -1,0 +1,48 @@
+{
+  "_meta": {
+    "generatedFrom": "game/config/rates.properties (BRProject local)",
+    "comparedToPublicRepoReference": true,
+    "differencesFromPublicReference": [
+      {
+        "field": "RateDropCurrency (Adena)",
+        "publicReferenceValue": "x10 (mencionado por el administrador de palabra)",
+        "localConfigValue": "x1.5",
+        "resolution": "Se usa el valor local (x1.5) porque es la fuente de verdad. Pendiente de confirmar si el admin quiere subir el rate real."
+      }
+    ]
+  },
+  "xp": 15,
+  "sp": 15,
+  "partyXp": 1.5,
+  "partySp": 1.5,
+  "adena": 1.5,
+  "dropItems": 1.5,
+  "spoil": 1.5,
+  "herbs": 0.8,
+  "manor": 1,
+  "questDrop": 1,
+  "questReward": 1,
+  "questRewardXp": 1,
+  "questRewardSp": 1,
+  "questRewardAdena": 1,
+  "raidBossXp": 1,
+  "raidBossSp": 1,
+  "raidBossDropItems": 1,
+  "grandBossXp": 1,
+  "grandBossSp": 1,
+  "grandBossDropItems": 1,
+  "premium": {
+    "xp": 2,
+    "sp": 2,
+    "adena": 2,
+    "dropItems": 2,
+    "spoil": 2,
+    "questDrop": 2,
+    "questReward": 2
+  },
+  "dynamicXp": {
+    "enabled": false,
+    "table": "1:5;2:5;3:5;4:5;5:5;6:4;7:0.5;8:0.25"
+  },
+  "publicVisible": true
+}
