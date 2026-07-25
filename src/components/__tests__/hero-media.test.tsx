@@ -125,4 +125,22 @@ describe("ChronicleButton", () => {
     expect(screen.queryByRole("link")).toBeNull();
     expect(screen.queryByRole("button")).toBeNull();
   });
+
+  it("defaults to gold and omits aria-label when optional props are absent", () => {
+    const { rerender } = render(
+      <ChronicleButton href="/download">Descargar</ChronicleButton>
+    );
+
+    const link = screen.getByRole("link", { name: "Descargar" });
+    expect(link).toHaveClass("border-[#bba269]");
+    expect(link).not.toHaveAttribute("aria-label");
+
+    rerender(<ChronicleButton href={null}>Crear cuenta</ChronicleButton>);
+
+    const disabled = screen
+      .getByText(/Crear cuenta/)
+      .closest("[aria-disabled]");
+    expect(disabled).toHaveClass("border-[#bba269]");
+    expect(disabled).not.toHaveAttribute("aria-label");
+  });
 });

@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 interface ChronicleButtonProps {
   href: string | null;
   children: ReactNode;
-  variant: "gold" | "violet";
-  ariaLabel: string;
+  variant?: "gold" | "violet";
+  ariaLabel?: string;
 }
 
 const sharedClassName =
@@ -19,7 +19,7 @@ const variantClassNames = {
 export function ChronicleButton({
   href,
   children,
-  variant,
+  variant = "gold",
   ariaLabel,
 }: ChronicleButtonProps) {
   const className = `${sharedClassName} ${variantClassNames[variant]}`;
@@ -27,7 +27,7 @@ export function ChronicleButton({
   if (href === null) {
     return (
       <span
-        aria-label={`${ariaLabel}, Próximamente`}
+        aria-label={ariaLabel ? `${ariaLabel}, Próximamente` : undefined}
         aria-disabled="true"
         className={`${className} cursor-not-allowed opacity-60`}
       >
