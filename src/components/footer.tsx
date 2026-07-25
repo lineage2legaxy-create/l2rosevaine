@@ -7,7 +7,7 @@ export const Footer = () => (
           Servidor de fans independiente. Lineage II y sus marcas pertenecen a sus respectivos propietarios. Este sitio no representa ni está afiliado a NCSoft.
         </p>
       </div>
-      <a href="/media/ATTRIBUTIONS.md" className="font-sans text-sm underline decoration-[#d7c58f]/60 underline-offset-4 hover:text-ivory">
+      <a href="/media/ATTRIBUTIONS.md" className="inline-flex min-h-11 items-center font-sans text-sm underline decoration-[#d7c58f]/60 underline-offset-4 hover:text-ivory">
         Créditos y atribuciones
       </a>
     </div>

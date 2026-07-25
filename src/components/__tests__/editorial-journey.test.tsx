@@ -41,6 +41,23 @@ describe("editorial page journey", () => {
     disabledActions.forEach((action) => expect(action).not.toHaveAttribute("href"));
   });
 
+  it("keeps compact navigation and footer links at least 44 pixels tall", () => {
+    render(<App />);
+
+    const desktopNavLinks = screen
+      .getAllByRole("link")
+      .filter((link) => NAV_ITEMS.some(({ label }) => link.textContent === label))
+      .filter((link) => link.closest(".lg\\:flex"));
+    const attributionLink = screen.getByRole("link", {
+      name: /créditos y atribuciones/i,
+    });
+
+    expect(desktopNavLinks).toHaveLength(NAV_ITEMS.length);
+    [...desktopNavLinks, attributionLink].forEach((link) => {
+      expect(link).toHaveClass("min-h-11", "inline-flex", "items-center");
+    });
+  });
+
   it("slices the icon atlas as its native four-by-three grid", () => {
     const { container } = render(<App />);
     const atlasCells = Array.from(

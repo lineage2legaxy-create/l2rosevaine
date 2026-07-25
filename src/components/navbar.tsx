@@ -93,7 +93,7 @@ export const Navbar = () => {
             <a
               key={href}
               href={href}
-              className="text-ivory/78 hover:text-ivory focus-visible:outline-ivory px-3 py-3 font-sans text-xs font-semibold tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="text-ivory/78 hover:text-ivory focus-visible:outline-ivory inline-flex min-h-11 items-center px-3 py-3 font-sans text-xs font-semibold tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               {label}
             </a>
