@@ -12,6 +12,38 @@ import { afterEach, describe, expect, it } from "vitest";
 import { Navbar } from "@/components/navbar";
 import { NAV_ITEMS } from "@/constants";
 
+function mockDesktopBreakpoint() {
+  const listeners = new Set<(event: MediaQueryListEvent) => void>();
+  const mediaQuery = {
+    matches: false,
+    media: "(min-width: 1024px)",
+    onchange: null,
+    addEventListener: (
+      _type: string,
+      listener: (event: MediaQueryListEvent) => void
+    ) => listeners.add(listener),
+    removeEventListener: (
+      _type: string,
+      listener: (event: MediaQueryListEvent) => void
+    ) => listeners.delete(listener),
+    addListener: () => undefined,
+    removeListener: () => undefined,
+    dispatchEvent: () => true,
+  };
+  Object.defineProperty(window, "matchMedia", {
+    configurable: true,
+    value: () => mediaQuery,
+  });
+  return {
+    change(matches: boolean) {
+      mediaQuery.matches = matches;
+      listeners.forEach((listener) =>
+        listener({ matches } as MediaQueryListEvent)
+      );
+    },
+  };
+}
+
 afterEach(() => {
   cleanup();
   document.body.style.overflow = "";
@@ -78,5 +110,36 @@ describe("Navbar mobile menu", () => {
       .closest("[aria-disabled]");
     expect(account).toHaveAttribute("aria-disabled", "true");
     expect(account).toHaveTextContent("Próximamente");
+  });
+
+  it("traps Tab and Shift+Tab focus inside the open dialog", async () => {
+    const user = userEvent.setup();
+    render(<Navbar />);
+    await user.click(screen.getByRole("button", { name: "Abrir menú" }));
+
+    const dialog = screen.getByRole("dialog");
+    const links = within(dialog).getAllByRole("link");
+    expect(links[0]).toHaveFocus();
+
+    await user.keyboard("{Shift>}{Tab}{/Shift}");
+    expect(links[links.length - 1]).toHaveFocus();
+
+    await user.keyboard("{Tab}");
+    expect(links[0]).toHaveFocus();
+  });
+
+  it("closes and releases body scroll when the desktop breakpoint activates", async () => {
+    const breakpoint = mockDesktopBreakpoint();
+    const user = userEvent.setup();
+    render(<Navbar />);
+    await user.click(screen.getByRole("button", { name: "Abrir menú" }));
+    expect(document.body.style.overflow).toBe("hidden");
+
+    breakpoint.change(true);
+
+    await waitFor(() =>
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+    );
+    expect(document.body.style.overflow).toBe("");
   });
 });

@@ -23,9 +23,31 @@ export const Navbar = () => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     firstLinkRef.current?.focus();
+    const desktopBreakpoint = window.matchMedia?.("(min-width: 1024px)");
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeMenu();
+      if (event.key === "Escape") {
+        closeMenu();
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const focusable = Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        ) ?? []
+      ).filter((element) => element.getAttribute("aria-disabled") !== "true");
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     const handlePointerDown = (event: PointerEvent) => {
       const target = event.target as Node;
@@ -36,13 +58,19 @@ export const Navbar = () => {
         closeMenu();
       }
     };
+    const handleDesktopBreakpoint = (event: MediaQueryListEvent) => {
+      if (event.matches) closeMenu();
+    };
 
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("pointerdown", handlePointerDown);
+    desktopBreakpoint?.addEventListener("change", handleDesktopBreakpoint);
+    if (desktopBreakpoint?.matches) closeMenu();
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("pointerdown", handlePointerDown);
+      desktopBreakpoint?.removeEventListener("change", handleDesktopBreakpoint);
     };
   }, [closeMenu, isMobileOpen]);
 
