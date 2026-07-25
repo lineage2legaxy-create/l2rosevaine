@@ -4,10 +4,10 @@ import { SERVER_INFO } from "@/constants";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
-type ServerStatusResponse = {
+interface ServerStatusResponse {
   loginServer: "online" | "offline";
   gameServer: "online" | "offline";
-};
+}
 
 const toneDot: Record<string, string> = {
   pending: "bg-amethyst-soft",
@@ -40,7 +40,8 @@ export const ServerStatus = () => {
     };
   }, []);
 
-  const isUp = status && status.loginServer === "online" && status.gameServer === "online";
+  const isUp =
+    status?.loginServer === "online" && status.gameServer === "online";
 
   const serverCard = failed
     ? { value: "No disponible", tone: "offline" as const }
